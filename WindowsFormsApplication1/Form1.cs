@@ -314,12 +314,12 @@ namespace WindowsFormsApplication1
 
         private void textBox_command_Leave(object sender, EventArgs e)
         {
-            if (checkBox_hexCommand.Checked == true) textBox_command.Text = Accessory.checkHexString(textBox_command.Text);
+            if (checkBox_hexCommand.Checked == true) textBox_command.Text = Accessory.CheckHexString(textBox_command.Text);
         }
 
         private void textBox_param_Leave(object sender, EventArgs e)
         {
-            if (checkBox_hexParam.Checked == true) textBox_param.Text = Accessory.checkHexString(textBox_param.Text);
+            if (checkBox_hexParam.Checked == true) textBox_param.Text = Accessory.CheckHexString(textBox_param.Text);
         }
 
         private void checkBox_DTR1_CheckedChanged(object sender, EventArgs e)
@@ -583,7 +583,7 @@ namespace WindowsFormsApplication1
                                     {
                                         serialPort1.Write(tmpBuffer, m, 1);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        Accessory.delay_ms(strDelay);
+                                        Accessory.Delay_ms(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                     if (checkBox_hexTerminal.Checked) outStr += Accessory.ConvertByteArrayToHex(tmpBuffer);
@@ -640,7 +640,7 @@ namespace WindowsFormsApplication1
                                 }
                                 for (int m = 0; m < tmpBuffer.Length; m++)
                                 {
-                                    tmpBuffer[m] = Accessory.checkHexString(tmpBuffer[m]);
+                                    tmpBuffer[m] = Accessory.CheckHexString(tmpBuffer[m]);
                                 }
                                 try
                                 {
@@ -651,7 +651,7 @@ namespace WindowsFormsApplication1
                                         else outStr += Accessory.ConvertHexToString(tmpBuffer[m].ToString());
                                         collectBuffer(outStr, Port1DataOut);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        Accessory.delay_ms(strDelay);
+                                        Accessory.Delay_ms(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                 }
@@ -674,14 +674,14 @@ namespace WindowsFormsApplication1
                                 {
                                     MessageBox.Show("\r\nError reading file " + textBox_fileName.Text + ": " + ex.Message);
                                 }
-                                tmpBuffer = Accessory.checkHexString(tmpBuffer);
+                                tmpBuffer = Accessory.CheckHexString(tmpBuffer);
                                 try
                                 {
                                     for (int m = 0; m < tmpBuffer.Length; m += 3)
                                     {
                                         serialPort1.Write(Accessory.ConvertHexToByteArray(tmpBuffer.Substring(m, 3)), 0, 1);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        Accessory.delay_ms(strDelay);
+                                        Accessory.Delay_ms(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                     if (checkBox_hexTerminal.Checked) outStr += tmpBuffer;
@@ -699,7 +699,7 @@ namespace WindowsFormsApplication1
                                 try
                                 {
                                     length = new FileInfo(textBox_fileName.Text).Length;
-                                    tmpBuffer = Accessory.checkHexString(File.ReadAllText(textBox_fileName.Text));
+                                    tmpBuffer = Accessory.CheckHexString(File.ReadAllText(textBox_fileName.Text));
                                 }
 
                                 catch (Exception ex)
@@ -723,7 +723,7 @@ namespace WindowsFormsApplication1
                                 collectBuffer(outStr, Port1DataOut);
                             }
                         }
-                        if (repeat > 1) Accessory.delay_ms(delay);
+                        if (repeat > 1) Accessory.Delay_ms(delay);
                         if (SendComing > 1) n = repeat;
                     }
                     button_Send.Enabled = true;
