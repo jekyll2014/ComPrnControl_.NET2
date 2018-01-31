@@ -27,9 +27,18 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                //this.textBox_terminal.Text += text;
-                this.textBox_terminal.SelectionStart = this.textBox_terminal.TextLength;
-                this.textBox_terminal.SelectedText = text;
+                int pos = textBox_terminal.SelectionStart;
+                this.textBox_terminal.Text += text;
+                if (checkBox_autoscroll.Checked)
+                {
+                    textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
+                    textBox_terminal.ScrollToCaret();
+                }
+                else
+                {
+                    textBox_terminal.SelectionStart = pos;
+                    textBox_terminal.ScrollToCaret();
+                }
             }
         }
 
@@ -141,34 +150,36 @@ namespace WindowsFormsApplication1
         private object threadLock = new object();
         public void collectBuffer(string tmpBuffer, int state)
         {
-            lock (threadLock)
+            if (tmpBuffer != "")
             {
-                if (txtOutState == state && (DateTime.Now.Ticks - oldTicks) < limitTick && state != 12 && state != 22)
+                string time = DateTime.Today.ToShortDateString() + " " + DateTime.Now.ToLongTimeString() + "." + DateTime.Now.Millisecond.ToString("D3");
+                lock (threadLock)
                 {
+                    if (!(txtOutState == state && (DateTime.Now.Ticks - oldTicks) < limitTick && state != Port1DataOut))
+                    {
+                        if (state == Port1DataIn) tmpBuffer = "<< " + tmpBuffer;         //sending data
+                        else if (state == Port1DataOut) tmpBuffer = ">> " + tmpBuffer;    //receiving data
+                        else if (state == Port1SignalIn) tmpBuffer = "<< " + tmpBuffer;    //pin change received
+                        else if (state == Port1SignalOut) tmpBuffer = ">> " + tmpBuffer;    //pin changed by user
+                        else if (state == Port1Error) tmpBuffer = "!! " + tmpBuffer;    //error occured
+
+                        if (checkBox_saveTime.Checked == true) tmpBuffer = time + " " + tmpBuffer;
+                        tmpBuffer = "\r\n" + tmpBuffer;
+                        txtOutState = state;
+                    }
+                    if ((checkBox_saveInput.Checked == true && state == Port1DataIn) || (checkBox_saveOutput.Checked == true && state == Port1DataOut))
+                    {
+                        try
+                        {
+                            File.AppendAllText(textBox_saveTo.Text, tmpBuffer, Encoding.GetEncoding(ComPrnControl.Properties.Settings.Default.CodePage));
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("\r\nError opening file " + textBox_saveTo.Text + ": " + ex.Message);
+                        }
+                    }
                     SetText(tmpBuffer);
                     oldTicks = DateTime.Now.Ticks;
-                }
-                else
-                {
-                    if (state == Port1DataIn) tmpBuffer = "\r\n<< " + tmpBuffer;         //sending data
-                    else if (state == Port1DataOut) tmpBuffer = "\r\n>> " + tmpBuffer;    //receiving data
-                    else if (state == Port1SignalIn) tmpBuffer = "\r\n<< " + tmpBuffer;    //pin change received
-                    else if (state == Port1SignalOut) tmpBuffer = "\r\n>> " + tmpBuffer;    //pin changed by user
-                    else if (state == Port1Error) tmpBuffer = "\r\n!! " + tmpBuffer;    //error occured
-                    SetText(tmpBuffer);
-                    txtOutState = state;
-                    oldTicks = DateTime.Now.Ticks;
-                }
-                if (checkBox_saveTo.Checked == true)
-                {
-                    try
-                    {
-                        File.AppendAllText(textBox_saveTo.Text, tmpBuffer, Encoding.GetEncoding(ComPrnControl_.NET2.Properties.Settings.Default.CodePage));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("\r\nError opening file " + textBox_saveTo.Text + ": " + ex.Message);
-                    }
                 }
             }
         }
@@ -184,9 +195,7 @@ namespace WindowsFormsApplication1
             textBox_command.Text = ComPrnControl_.NET2.Properties.Settings.Default.textBox_command;
             checkBox_hexParam.Checked = ComPrnControl_.NET2.Properties.Settings.Default.checkBox_hexParam;
             textBox_param.Text = ComPrnControl_.NET2.Properties.Settings.Default.textBox_param;
-            textBox_strLimit.Text = ComPrnControl_.NET2.Properties.Settings.Default.LineBreakTimeout.ToString();
-            limitTick = 0;
-            long.TryParse(textBox_strLimit.Text, out limitTick);
+            limitTick = ComPrnControl_.NET2.Properties.Settings.Default.LineBreakTimeout;
             limitTick *= 10000;
             serialPort1.Encoding = Encoding.GetEncoding(ComPrnControl_.NET2.Properties.Settings.Default.CodePage);
             SerialPopulate();
@@ -302,15 +311,6 @@ namespace WindowsFormsApplication1
         {
             textBox_terminal.Clear();
         }
-
-        /*private void textBox_terminal_TextChanged(object sender, EventArgs e)
-        {
-            if (checkBox_autoscroll.Checked == true)
-            {
-                textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
-                textBox_terminal.ScrollToCaret();
-            }
-        }*/
 
         private void textBox_command_Leave(object sender, EventArgs e)
         {
@@ -737,13 +737,6 @@ namespace WindowsFormsApplication1
                 }
                 SendComing = 0;
             }
-        }
-
-        private void textBox_strLimit_TextChanged(object sender, EventArgs e)
-        {
-            limitTick = 0;
-            long.TryParse(textBox_strLimit.Text, out limitTick);
-            limitTick *= 10000;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
