@@ -12,6 +12,7 @@ namespace WindowsFormsApplication1
         bool o_cd1, o_dsr1, o_dtr1, o_rts1, o_cts1;
         int SendComing = 0, txtOutState = 0;
         long oldTicks = DateTime.Now.Ticks, limitTick = 0;
+        int LogLinesLimit = 100;
 
         delegate void SetTextCallback1(string text);
         private void SetText(string text)
@@ -20,15 +21,25 @@ namespace WindowsFormsApplication1
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             //if (this.textBox_terminal1.InvokeRequired)
-            if (this.textBox_terminal.InvokeRequired)
+            if (textBox_terminal.InvokeRequired)
             {
                 SetTextCallback1 d = new SetTextCallback1(SetText);
-                this.BeginInvoke(d, new object[] { text });
+                BeginInvoke(d, new object[] { text });
             }
             else
             {
                 int pos = textBox_terminal.SelectionStart;
-                this.textBox_terminal.Text += text;
+                textBox_terminal.AppendText(text);
+                if (textBox_terminal.Lines.Length > LogLinesLimit)
+                {
+                    StringBuilder tmp = new StringBuilder();
+                    for (int i = textBox_terminal.Lines.Length - LogLinesLimit; i < textBox_terminal.Lines.Length; i++)
+                    {
+                        tmp.Append(textBox_terminal.Lines[i]);
+                        tmp.Append("\r\n");
+                    }
+                    textBox_terminal.Text = tmp.ToString();
+                }
                 if (checkBox_autoscroll.Checked)
                 {
                     textBox_terminal.SelectionStart = textBox_terminal.Text.Length;
@@ -197,6 +208,7 @@ namespace WindowsFormsApplication1
             textBox_param.Text = ComPrnControl_.NET2.Properties.Settings.Default.textBox_param;
             limitTick = ComPrnControl_.NET2.Properties.Settings.Default.LineBreakTimeout;
             limitTick *= 10000;
+            LogLinesLimit = ComPrnControl_.NET2.Properties.Settings.Default.LogLinesLimit;
             serialPort1.Encoding = Encoding.GetEncoding(ComPrnControl_.NET2.Properties.Settings.Default.CodePage);
             SerialPopulate();
         }
