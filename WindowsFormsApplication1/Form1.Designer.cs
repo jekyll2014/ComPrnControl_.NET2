@@ -80,8 +80,10 @@ namespace WindowsFormsApplication1
             this.textBox_sendNum = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox_strLimit = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBox_saveTime = new System.Windows.Forms.CheckBox();
+            this.checkBox_saveOutput = new System.Windows.Forms.CheckBox();
+            this.checkBox_saveInput = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button_refresh
@@ -325,7 +327,7 @@ namespace WindowsFormsApplication1
             // button_Clear
             // 
             this.button_Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_Clear.Location = new System.Drawing.Point(502, 275);
+            this.button_Clear.Location = new System.Drawing.Point(502, 225);
             this.button_Clear.Name = "button_Clear";
             this.button_Clear.Size = new System.Drawing.Size(70, 25);
             this.button_Clear.TabIndex = 23;
@@ -366,7 +368,7 @@ namespace WindowsFormsApplication1
             this.checkBox_hexTerminal.AutoSize = true;
             this.checkBox_hexTerminal.Checked = true;
             this.checkBox_hexTerminal.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_hexTerminal.Location = new System.Drawing.Point(90, 283);
+            this.checkBox_hexTerminal.Location = new System.Drawing.Point(90, 233);
             this.checkBox_hexTerminal.Name = "checkBox_hexTerminal";
             this.checkBox_hexTerminal.Size = new System.Drawing.Size(48, 17);
             this.checkBox_hexTerminal.TabIndex = 20;
@@ -379,8 +381,7 @@ namespace WindowsFormsApplication1
             this.checkBox_autoscroll.AutoSize = true;
             this.checkBox_autoscroll.Checked = true;
             this.checkBox_autoscroll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_autoscroll.Enabled = false;
-            this.checkBox_autoscroll.Location = new System.Drawing.Point(12, 283);
+            this.checkBox_autoscroll.Location = new System.Drawing.Point(12, 233);
             this.checkBox_autoscroll.Name = "checkBox_autoscroll";
             this.checkBox_autoscroll.Size = new System.Drawing.Size(75, 17);
             this.checkBox_autoscroll.TabIndex = 19;
@@ -411,9 +412,8 @@ namespace WindowsFormsApplication1
             this.textBox_terminal.Name = "textBox_terminal";
             this.textBox_terminal.ReadOnly = true;
             this.textBox_terminal.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox_terminal.Size = new System.Drawing.Size(560, 71);
+            this.textBox_terminal.Size = new System.Drawing.Size(560, 21);
             this.textBox_terminal.TabIndex = 18;
-            //this.textBox_terminal.TextChanged += new System.EventHandler(this.textBox_terminal_TextChanged);
             // 
             // textBox_command
             // 
@@ -450,7 +450,7 @@ namespace WindowsFormsApplication1
             // textBox_saveTo
             // 
             this.textBox_saveTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_saveTo.Location = new System.Drawing.Point(211, 281);
+            this.textBox_saveTo.Location = new System.Drawing.Point(420, 231);
             this.textBox_saveTo.Name = "textBox_saveTo";
             this.textBox_saveTo.Size = new System.Drawing.Size(70, 20);
             this.textBox_saveTo.TabIndex = 22;
@@ -462,7 +462,7 @@ namespace WindowsFormsApplication1
             this.checkBox_saveTo.AutoSize = true;
             this.checkBox_saveTo.Checked = true;
             this.checkBox_saveTo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_saveTo.Location = new System.Drawing.Point(141, 283);
+            this.checkBox_saveTo.Location = new System.Drawing.Point(350, 233);
             this.checkBox_saveTo.Name = "checkBox_saveTo";
             this.checkBox_saveTo.Size = new System.Drawing.Size(64, 17);
             this.checkBox_saveTo.TabIndex = 21;
@@ -632,33 +632,64 @@ namespace WindowsFormsApplication1
             this.label23.TabIndex = 112;
             this.label23.Text = "times;";
             // 
-            // label2
+            // label3
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(287, 284);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(102, 13);
-            this.label2.TabIndex = 118;
-            this.label2.Text = "combine strings, ms:";
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(144, 234);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 125;
+            this.label3.Text = "Save";
             // 
-            // textBox_strLimit
+            // checkBox_saveTime
             // 
-            this.textBox_strLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_strLimit.Location = new System.Drawing.Point(395, 281);
-            this.textBox_strLimit.Name = "textBox_strLimit";
-            this.textBox_strLimit.Size = new System.Drawing.Size(34, 20);
-            this.textBox_strLimit.TabIndex = 117;
-            this.textBox_strLimit.Text = "1000";
-            this.textBox_strLimit.TextChanged += new System.EventHandler(this.textBox_strLimit_TextChanged);
+            this.checkBox_saveTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox_saveTime.AutoSize = true;
+            this.checkBox_saveTime.Checked = true;
+            this.checkBox_saveTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_saveTime.Location = new System.Drawing.Point(182, 233);
+            this.checkBox_saveTime.Name = "checkBox_saveTime";
+            this.checkBox_saveTime.Size = new System.Drawing.Size(45, 17);
+            this.checkBox_saveTime.TabIndex = 124;
+            this.checkBox_saveTime.Text = "time";
+            this.checkBox_saveTime.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_saveOutput
+            // 
+            this.checkBox_saveOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox_saveOutput.AutoSize = true;
+            this.checkBox_saveOutput.Checked = true;
+            this.checkBox_saveOutput.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_saveOutput.Location = new System.Drawing.Point(288, 233);
+            this.checkBox_saveOutput.Name = "checkBox_saveOutput";
+            this.checkBox_saveOutput.Size = new System.Drawing.Size(56, 17);
+            this.checkBox_saveOutput.TabIndex = 122;
+            this.checkBox_saveOutput.Text = "output";
+            this.checkBox_saveOutput.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_saveInput
+            // 
+            this.checkBox_saveInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox_saveInput.AutoSize = true;
+            this.checkBox_saveInput.Checked = true;
+            this.checkBox_saveInput.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_saveInput.Location = new System.Drawing.Point(233, 233);
+            this.checkBox_saveInput.Name = "checkBox_saveInput";
+            this.checkBox_saveInput.Size = new System.Drawing.Size(49, 17);
+            this.checkBox_saveInput.TabIndex = 123;
+            this.checkBox_saveInput.Text = "input";
+            this.checkBox_saveInput.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 312);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox_strLimit);
+            this.ClientSize = new System.Drawing.Size(584, 262);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.checkBox_saveTime);
+            this.Controls.Add(this.checkBox_saveOutput);
+            this.Controls.Add(this.checkBox_saveInput);
             this.Controls.Add(this.radioButton_stream);
             this.Controls.Add(this.radioButton_byByte);
             this.Controls.Add(this.radioButton_byString);
@@ -765,9 +796,11 @@ namespace WindowsFormsApplication1
         private TextBox textBox_sendNum;
         private Label label24;
         private Label label23;
-        private Label label2;
-        private TextBox textBox_strLimit;
         public SerialPort serialPort1;
+        private Label label3;
+        private CheckBox checkBox_saveTime;
+        private CheckBox checkBox_saveOutput;
+        private CheckBox checkBox_saveInput;
 
         //Settings
         //const int CodePage = 866;
