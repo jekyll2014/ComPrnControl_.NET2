@@ -438,7 +438,7 @@ namespace WindowsFormsApplication1
 
         private void button_Send_Click(object sender, EventArgs e)
         {
-            if (textBox_command.Text != "" || textBox_command.Text != "")
+            if (textBox_command.Text != "" || textBox_param.Text != "")
             {
                 string outStr = "";
                 string sendStrHex = "";
@@ -522,13 +522,6 @@ namespace WindowsFormsApplication1
         }
 
         private void textBox_command_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (button_Send.Enabled == true)
-                if (e.KeyData == Keys.Return)
-                    button_Send_Click(textBox_command, EventArgs.Empty);
-        }
-
-        private void textBox_param_KeyUp(object sender, KeyEventArgs e)
         {
             if (button_Send.Enabled == true)
                 if (e.KeyData == Keys.Return)
