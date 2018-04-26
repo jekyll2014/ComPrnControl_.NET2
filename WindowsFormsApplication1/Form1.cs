@@ -595,7 +595,7 @@ namespace WindowsFormsApplication1
                                     {
                                         serialPort1.Write(tmpBuffer, m, 1);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        Accessory.Delay_ms(strDelay);
+                                        if (strDelay > 0) Accessory.Delay_ms(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                     if (checkBox_hexTerminal.Checked) outStr += Accessory.ConvertByteArrayToHex(tmpBuffer);
@@ -663,7 +663,7 @@ namespace WindowsFormsApplication1
                                         else outStr += Accessory.ConvertHexToString(tmpBuffer[m].ToString());
                                         collectBuffer(outStr, Port1DataOut);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        Accessory.Delay_ms(strDelay);
+                                        if (strDelay>0)Accessory.Delay_ms(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                 }
@@ -693,7 +693,7 @@ namespace WindowsFormsApplication1
                                     {
                                         serialPort1.Write(Accessory.ConvertHexToByteArray(tmpBuffer.Substring(m, 3)), 0, 1);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        Accessory.Delay_ms(strDelay);
+                                        if(strDelay>0) Accessory.Delay_ms(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                     if (checkBox_hexTerminal.Checked) outStr += tmpBuffer;
