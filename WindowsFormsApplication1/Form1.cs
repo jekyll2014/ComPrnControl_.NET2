@@ -527,7 +527,7 @@ namespace WindowsFormsApplication1
                 if (e.KeyData == Keys.Return)
                     button_Send_Click(textBox_command, EventArgs.Empty);
         }
-
+                                                    
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             textBox_fileName.Text = openFileDialog1.FileName;
