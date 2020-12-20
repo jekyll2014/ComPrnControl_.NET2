@@ -590,7 +590,7 @@ namespace WindowsFormsApplication1
                                     {
                                         serialPort1.Write(tmpBuffer, m, 1);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        if (strDelay > 0) Accessory.Delay_ms(strDelay);
+                                        if (strDelay > 0) Accessory.DelayMs(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                     if (checkBox_hexTerminal.Checked) outStr += Accessory.ConvertByteArrayToHex(tmpBuffer);
@@ -658,7 +658,7 @@ namespace WindowsFormsApplication1
                                         else outStr += Accessory.ConvertHexToString(tmpBuffer[m].ToString());
                                         collectBuffer(outStr, Port1DataOut);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        if (strDelay>0)Accessory.Delay_ms(strDelay);
+                                        if (strDelay>0)Accessory.DelayMs(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                 }
@@ -688,7 +688,7 @@ namespace WindowsFormsApplication1
                                     {
                                         serialPort1.Write(Accessory.ConvertHexToByteArray(tmpBuffer.Substring(m, 3)), 0, 1);
                                         progressBar1.Value = (n * tmpBuffer.Length + m) * 100 / (repeat * tmpBuffer.Length);
-                                        if(strDelay>0) Accessory.Delay_ms(strDelay);
+                                        if(strDelay>0) Accessory.DelayMs(strDelay);
                                         if (SendComing > 1) m = tmpBuffer.Length;
                                     }
                                     if (checkBox_hexTerminal.Checked) outStr += tmpBuffer;
@@ -730,7 +730,7 @@ namespace WindowsFormsApplication1
                                 collectBuffer(outStr, Port1DataOut);
                             }
                         }
-                        if (repeat > 1) Accessory.Delay_ms(delay);
+                        if (repeat > 1) Accessory.DelayMs(delay);
                         if (SendComing > 1) n = repeat;
                     }
                     button_Send.Enabled = true;
